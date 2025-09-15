@@ -15,8 +15,15 @@ datasource db {
 }
 
 model User {
-  id Int @default(autoincrement()) @id
-  email String
-  name String?
-  @@map("users")
+  id        Int       @id @default(autoincrement())
+  nickname  String
+  messages  Message[]
+}
+
+model Message {
+  id        Int      @id @default(autoincrement())
+  content   String
+  createdAt DateTime @default(now())
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
 }
