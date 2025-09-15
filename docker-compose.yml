@@ -1,49 +1,26 @@
-# バージョン指定
 version: '3.8'
-# サービスを列挙する（docker psで確認できるコンテナ一覧の単位）
 services:
-  # サービス名
   frontend:
-    # コンテナ名
-    container_name: frontend
-    # ソースからコンテナイメージを作成するためのビルド構成を指定する
+    container_name: frontend_fall
     build:
-      # Dockerfileを含むディレクトリへのパス、またはGitリポジトリへのURLを定義する。
-      # 指定が無ければデフォルトの(./)となる。
       context: ./frontend
-      # 代替Dockerfileを設定する（おそらくDockerfileの名前）
       dockerfile: Dockerfile
-    # コンテナからアクセス可能なホストのパスを指定する
     volumes:
-      # バインドマウントのパスを指定
       - ./frontend:/app
-      # 名前付きボリュームを指定
-      # - frontend-node-modules:/app/node_modules
-    # ホストマシンとコンテナ間のポートマッピング
     ports:
-      # ホストのポート：コンテナのポート
       - "3000:3000"
-    # 割り当てられた stdin を使用して実行するようにサービスのコンテナーを構成する。
-    # コンテナをSTDIN開いたままにして、標準入力を通じてコン​​テナに入力を送信できるようにする
     stdin_open: true
-    # 疑似 TTY をコンテナに接続し、ターミナルをコンテナの I/O ストリームに接続する。
-    # 疑似 TTY をコンテナに割り当てると、TTY デバイスが提供する入出力機能にアクセスできる
-    # ようになる
     tty: true
-    # サービスが相互に通信できるようになる
-    # 詳細：https://docs.docker.com/reference/compose-file/networks/
     networks:
-      # ネットワーク名
-      - project_network
+      - project_network_fall
 
   backend:
-    container_name: backend
+    container_name: backend_fall
     build:
       context: ./backend
       dockerfile: Dockerfile
     volumes:
       - ./backend:/app
-      # - backend-node-modules:/app/node_modules
     ports:
       - "3001:3001"
       - "5555:5555"
@@ -52,32 +29,27 @@ services:
     depends_on:
       - db
     networks:
-      - project_network
+      - project_network_fall
 
   db:
-    container_name: project_mysql
-    image: mysql:8.0
+    container_name: project_postgres
+    image: postgres:15
     environment:
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: project
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: dbname
     ports:
-      - "3306:3306"
+      - "5411:5432"
     volumes:
-      - mysql_data:/var/lib/mysql
+      - db-data:/var/lib/postgresql/data
     networks:
-      - project_network
-# 名前付きボリューム
+      - project_network_fall
 volumes:
-  mysql_data:
+  db_data:
   frontend-node-modules:
   backend-node-modules:
 
-# サービスが相互に通信できるようにする設定
 networks:
-  # 名前
-  project_network:
-    # ネットワーク名
-    name: project_network
-    #  デフォルトのネットワークドライバ
-    #  詳細：https://docs.docker.com/engine/network/drivers/
+  project_network_fall:
+    name: project_network_fall
     driver: bridge
