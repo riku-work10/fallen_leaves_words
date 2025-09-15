@@ -7,14 +7,21 @@ async function bootstrap() {
 
   app.useGlobalPipes(
     new ValidationPipe({
-      whitelist: true,              // DTO にないプロパティは自動で除外
-      forbidNonWhitelisted: true,   // DTO にないプロパティがあればエラー
-      transform: true,              // リクエストを DTO クラスに変換
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
     }),
   );
 
-  app.enableCors({ origin: 'http://localhost:3000', credentials: true });
+  app.enableCors({
+    origin: [
+      'http://localhost:3000',       // 開発用
+      'https://fallen-leaves-words.vercel.app', // Vercel の URL
+    ],
+    credentials: true,
+  });
 
-  await app.listen(3001);
+  const port = process.env.PORT || 3001;
+  await app.listen(port);
 }
 bootstrap();
