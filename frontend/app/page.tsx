@@ -37,7 +37,7 @@ export default function Home() {
 
   if (loading) return <div className="p-4">読み込み中...</div>;
 
-  return (
+   return (
     <div className="flex h-screen">
       {!userId ? (
         <NicknamePopup
@@ -48,18 +48,22 @@ export default function Home() {
         />
       ) : (
         <>
-          {/* 左側: 投稿と落ち葉 */}
+          {/* 左側: 落ち葉表示のみ */}
           <div className="flex-1 flex flex-col p-4">
             <h1 className="text-2xl font-bold mb-4">みんなの落ち葉</h1>
-            <MessageForm onSubmit={fetchMessages} userId={userId} />
             <div className="flex-1 relative">
               <FallingLeaves messages={messages} />
             </div>
           </div>
 
-          {/* 右側: 過去の投稿チャット */}
-          <div className="w-1/5 border-l">
-            <ChatList messages={messages} />
+          {/* 右側: 過去の投稿チャット + フォーム */}
+          <div className="w-1/4 border-l flex flex-col">
+            <div className="flex-1 overflow-y-auto p-2">
+              <ChatList messages={messages} />
+            </div>
+            <div className="p-2 border-t">
+              <MessageForm onSubmit={fetchMessages} userId={userId} />
+            </div>
           </div>
         </>
       )}
