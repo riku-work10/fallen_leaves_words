@@ -46,6 +46,18 @@ body {
   }
 }
 
-.animate-flutter {
-  animation: flutter linear forwards;
+@keyframes flutter-fall {
+  0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 1; }
+  25% { transform: translateY(25vh) translateX(5px) rotate(5deg); }
+  50% { transform: translateY(50vh) translateX(-5px) rotate(-5deg); }
+  75% { transform: translateY(75vh) translateX(5px) rotate(5deg); }
+  100% { transform: translateY(100vh) translateX(0) rotate(0deg); opacity: 0; }
 }
+
+.animate-flutter {
+  animation-name: flutter-fall;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+
