@@ -55,7 +55,7 @@ export default function Home() {
           <div className="relative z-10 text-2xl md:text-3xl font-bold text-white drop-shadow-lg mb-8 px-4">
             🍂 落ち葉の世界へようこそ 🍂
             <p className="mt-2 text-base md:text-lg font-normal">
-              もともとわふわ落ちる葉っぱを眺めながら、まずはニックネームを入力してね
+              落ち葉と言葉の「葉」が同じじゃん！ならくっつけちゃえ！
               <br />
               そんな感じでできたアプリです
             </p>
@@ -103,7 +103,7 @@ export default function Home() {
             }}
           >
             <h1 className="text-3xl font-bold text-orange-400 mb-4 text-center drop-shadow-lg">
-              みんなの落ち葉
+              みんなの葉
             </h1>
             <div className="flex-1 w-full relative">
               <FallingLeaves messages={messages} />
