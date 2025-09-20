@@ -36,7 +36,7 @@ export default function FallingLeaves({ messages }: { messages: Leaf[] }) {
           onAnimationEnd={() => handleAnimationEnd(leaf)}
         >
           {leaf.content}
-        </div>
+      </div>
       ))}
 
       {/* 積もった葉 */}
